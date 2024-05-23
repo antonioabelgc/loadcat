@@ -44,6 +44,12 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label for="inpRewrite" class="col-sm-2 control-label">Rewrite (Optional)</label>
+					<div class="col-sm-4">
+						<input type="text" name="settings.rewrite" class="form-control" id="inpRewrite" value="{{.Balancer.Settings.Rewrite}}">
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="inpAlgorithm" class="col-sm-2 control-label">Algorithm</label>
 					<div class="col-sm-4">
 						<select name="settings.algorithm" class="form-control" id="inpAlgorithm">
@@ -126,6 +132,7 @@
 {{define "sidebar"}}
 
 {{end}}
+
 {{define "scripts"}}
 <script type="text/javascript">
 $('#inpProtocol').on('change', function() {
@@ -171,4 +178,3 @@ function deleteBalancer() {
 }
 </script>
 {{end}}
-

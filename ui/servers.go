@@ -177,7 +177,6 @@ func HandleServerUpdate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/balancers/"+srv.BalancerId.Hex(), http.StatusSeeOther)
 }
 
-
 func HandleServerDelete(w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
     if !bson.IsObjectIdHex(vars["id"]) {

@@ -21,6 +21,7 @@ type BalancerSettings struct {
 	Hostname   string
 	Port       int
 	Protocol   Protocol
+	Rewrite    string
 	Algorithm  Algorithm
 	SSLOptions SSLOptions
 	SSLVerifyClient SSLVerifyClient
@@ -105,6 +106,7 @@ func (b *Balancer) Delete() error {
         return bucket.Delete([]byte(b.Id.Hex()))
     })
 }
+
 
 func (l *Balancer) Servers() ([]Server, error) {
 	return ListServersByBalancer(l)

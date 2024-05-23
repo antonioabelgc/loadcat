@@ -55,6 +55,7 @@ func HandleBalancerCreate(w http.ResponseWriter, r *http.Request) {
 	bal := data.Balancer{}
 	bal.Label = body.Label
 	bal.Settings.Hostname = "example.com"
+	bal.Settings.Rewrite = ""
 	bal.Settings.Port = 80
 	err = bal.Put()
 	if err != nil {
@@ -141,6 +142,7 @@ func HandleBalancerUpdate(w http.ResponseWriter, r *http.Request) {
 			Hostname   string `schema:"hostname"`
 			Port       int    `schema:"port"`
 			Protocol   string `schema:"protocol"`
+			Rewrite   string `schema:"rewrite"`
 			Algorithm  string `schema:"algorithm"`
 			SSLOptions struct {
 				CipherSuite string  `schema:"cipher_suite"`
@@ -163,6 +165,7 @@ func HandleBalancerUpdate(w http.ResponseWriter, r *http.Request) {
 	bal.Settings.Hostname = body.Settings.Hostname
 	bal.Settings.Port = body.Settings.Port
 	bal.Settings.Protocol = data.Protocol(body.Settings.Protocol)
+	bal.Settings.Rewrite = body.Settings.Rewrite
 	bal.Settings.Algorithm = data.Algorithm(body.Settings.Algorithm)
 	if body.Settings.Protocol == "https" {
 		bal.Settings.SSLOptions.CipherSuite = "recommended"
@@ -204,6 +207,7 @@ func HandleBalancerDelete(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	// Eliminar el balanceador y todos sus servidores asociados
 	err = bal.Delete()
 	if err != nil {
 		panic(err)
@@ -211,6 +215,7 @@ func HandleBalancerDelete(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/balancers", http.StatusSeeOther)
 }
+
 
 func init() {
 	Router.NewRoute().
@@ -241,4 +246,5 @@ func init() {
 		Methods("POST").
 		Path("/balancers/{id}/delete").
 		Handler(http.HandlerFunc(HandleBalancerDelete))
+
 }
