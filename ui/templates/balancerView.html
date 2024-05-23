@@ -59,6 +59,13 @@
 				<dt>Protocol</dt>
 				<dd>{{.Balancer.Settings.Protocol.Label}}</dd>
 			</dl>
+		{{if .Balancer.Settings.Rewrite}}
+			<dl>
+				<dt>Rewrite</dt>
+				<dd>{{.Balancer.Settings.Rewrite}}</dd>
+			</dl>
+		{{end}}
+			<dl>
 			<dl>
 				<dt>Algorithm</dt>
 				<dd>{{.Balancer.Settings.Algorithm.Label}}</dd>

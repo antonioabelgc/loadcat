@@ -46,7 +46,6 @@ server {
 
 		ssl_certificate      /var/lib/loadcat/out/{{.Balancer.Id.Hex}}/server.crt;
 		ssl_certificate_key  /var/lib/loadcat/out/{{.Balancer.Id.Hex}}/server.key;
-
 	{{end}}
 
 	{{if eq .Balancer.Settings.SSLOptions.SSLVerify "on"}}
@@ -55,6 +54,11 @@ server {
 	{{end}}
 
 	location / {
+
+	{{if .Balancer.Settings.Rewrite}}
+		rewrite ^(.*)$ {{.Balancer.Settings.Rewrite}}$1 break;
+	{{end}}
+
 		proxy_set_header  Host $host;
 		proxy_set_header  X-Real-IP $remote_addr;
 		proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
